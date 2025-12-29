@@ -123,8 +123,8 @@ class Person:
             name (str): The person's name
             age (int): The person's age
         """
-        self._name = name  # Private attribute (convention: starts with _)
-        self._age = age
+        self.__name = name  # Private attribute (convention: starts with __)
+        self.__age = age
     
     @property
     def name(self):
@@ -138,7 +138,7 @@ class Person:
             str: The person's name
         """
         print("  📖 Getting name...")
-        return self._name
+        return self.__name
     
     @name.setter
     def name(self, value):
@@ -159,7 +159,7 @@ class Person:
             raise ValueError("Name must be a string!")
         if len(value.strip()) == 0:
             raise ValueError("Name cannot be empty!")
-        self._name = value
+        self.__name = value
     
     @name.deleter
     def name(self):
@@ -170,7 +170,7 @@ class Person:
         Useful for cleanup operations.
         """
         print("  🗑️  Deleting name...")
-        self._name = None
+        self.__name = None
     
     @property
     def age(self):
@@ -180,7 +180,7 @@ class Person:
         Returns:
             int: The person's age
         """
-        return self._age
+        return self.__age
     
     @age.setter
     def age(self, value):
@@ -199,7 +199,7 @@ class Person:
             raise ValueError("Age cannot be negative!")
         if value > 150:
             raise ValueError("Age seems unrealistic!")
-        self._age = value
+        self.__age = value
     
     @property
     def is_adult(self):
@@ -212,7 +212,7 @@ class Person:
         Returns:
             bool: True if person is 18 or older
         """
-        return self._age >= 18
+        return self.__age >= 18
 
 
 # Using property decorators
@@ -546,6 +546,19 @@ from typing import overload, Union
 
 class Calculator:
     """A calculator demonstrating function overloading with type hints."""
+
+    @overload
+    def add(self, a: int, b: int) -> int:
+        ...
+
+    @overload
+    def add(self, a: int, b: int, c: int) -> int:
+        ...
+
+    def add(self, a: int, b: int, c: int | None = None) -> int:
+        if c is None:
+            return a + b
+        return a + b + c
     
     @overload
     def process(self, value: int) -> int:
