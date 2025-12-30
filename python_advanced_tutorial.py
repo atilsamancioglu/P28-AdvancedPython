@@ -849,31 +849,25 @@ They are applied from bottom to top (closest to the function first).
 """
 
 
-def bold(func):
-    """Wrap output in bold markers."""
-    def wrapper(*args, **kwargs):
-        return f"**{func(*args, **kwargs)}**"
+def multiply_decorator(func):
+    def wrapper(x: int):
+        return func(x) * 2
     return wrapper
 
 
-def italic(func):
-    """Wrap output in italic markers."""
-    def wrapper(*args, **kwargs):
-        return f"_{func(*args, **kwargs)}_"
+def other_decorator(func):
+    def wrapper(x: int):
+        return func(x) * 4
     return wrapper
 
 
-@bold
-@italic
-def get_message():
-    """Get a formatted message."""
-    return "Hello, World"
+@multiply_decorator
+@other_decorator
+def calculate(x: int):
+    return x * 2
 
 
-print("\nExample 15: Stacked Decorators")
-print(f"Formatted message: {get_message()}")
-print("(italic applied first, then bold)")
-
+print(calculate(10))
 
 # ============================================================================
 # SUMMARY AND BEST PRACTICES
